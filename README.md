@@ -104,7 +104,7 @@ I chose to work on this project because of several reasons:
 
 # ✂️ Clone repo
 
-You can clone this repo by downloading with the following:
+You can clone this repo with the following:
 
 ```
 $ git clone https://github.com/AnujDahiya24/FIDE-Chess-Data

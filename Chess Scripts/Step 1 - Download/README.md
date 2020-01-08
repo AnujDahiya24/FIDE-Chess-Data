@@ -1,6 +1,6 @@
 # 📚 Introduction 
 
-The first step has us downloading the profile player data (zipped text files) from [FIDE's website](http://ratings.fide.com/download_lists.phtml). Feel free to explore FIDE's website. It seems as if data prior to 2015 is not being displayed anymore. Thankfully, all of the URLs still host the `.zip` files that we will download and are **not** broken.
+The first step has us downloading the profile player data (zipped text files) from [FIDE's website](http://ratings.fide.com/download_lists.phtml). Feel free to explore FIDE's [new] website. It seems as if data prior to 2015 is not being displayed anymore. Thankfully, all of the URLs still host the `.zip` files that we will download and are **not** broken.
 
 If you want to: 
 
