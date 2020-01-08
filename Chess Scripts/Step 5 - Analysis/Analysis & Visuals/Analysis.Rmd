@@ -582,14 +582,14 @@ The most aesthetically pleasing graph to look at is the one above. It reveals a 
 - There is a slight negative correlation, among all titled player groups, between Age and Rating. 
 
 
-# Males/Females rating distributions
+# Males/Females rating distributions (December 2019)
 
 ```{r, echo=FALSE, cache=FALSE}
 p19
 ```
 
 
-Above is a plot showing the stark difference between male and female rating distributions. I'll look to explore why the female rating distribution is sharply skewed right compared to their male counterparts. 
+Above is a plot showing the stark difference between male and female rating distributions for the previous month. I'll look to explore why the female rating distribution is sharply skewed right compared to the male counterpart. 
 
 
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
