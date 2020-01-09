@@ -16,7 +16,7 @@ The project is divided into 6 steps, which are outlined [here](https://github.co
 
 The data is located in this [folder](https://github.com/AnujDahiya24/FIDE-Chess-Data/tree/master/Chess%20Scripts/Step%204%20-%20Cleaning/Cleaned%20csvs).
 
-The folder contains over a hundred `.csv` files that can be analyzed.
+The folder contains over a hundred `.csv` files, from January 2001 to December 2019, that can be analyzed.
 
 If you have suggestions on different data formats you'd like, please state them in [Issues](https://github.com/AnujDahiya24/FIDE/issues).
 
