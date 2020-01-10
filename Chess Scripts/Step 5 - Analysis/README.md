@@ -1,6 +1,6 @@
 # 📚 Introduction
 
-Welcome to the analytical portion of this repository. There are several topics explored here, but countless more to explore over time. 
+Welcome to the analytical portion of this repository. There are several topics explored here, but countless more to explore over time.
 
 A few examples of visuals in the `Tutorial` file below are:
 
@@ -13,7 +13,7 @@ A few examples of visuals in the `Tutorial` file below are:
 - Strongest countries by age group
 - Age vs Rating by title (Latest month)
 
-If you want to: 
+If you want to:
 1. View the process of the data visualization, then see the `Tutorial` below
 2. Run the script yourself, then you should download the `R-Markdown file` below and run it on your local machine.
 
@@ -36,12 +36,12 @@ I find this graph to be interesting because it shows a few strange trends:
 
 - The graphs look like play-dough that has been slowly compressed over time.
 - There were no players rated below 2200 in many of the early datasets provided by FIDE.
-- Around 2014, both the male and female distributions looked fairly Guassian in their shape
-- Since 2014, FIDE's rating floor of 1000 has prevented players from naturally falling below the floor. I will look to explore the differences between the male and female distributions (both are heavily right skewed, but the female distribution is even more so) moving foward. There's an interesting sociological phenomenon present here that has not been vocalized in public yet.
+- Around 2014, both the male and female distributions looked fairly Gaussian in their shape
+- Since 2014, FIDE's rating floor of 1000 has prevented players from naturally falling below the floor. I will look to explore the differences between the male and female distributions (both are heavily right-skewed, but the female distribution is even more so) moving forward. There's an interesting sociological phenomenon present here that has not been vocalized in public yet.
 
 # ⌚ Time Length
 
-Note: The `Analysis.pdf` file take a several minutes to knit because of funcions like `rbindlist()` that combine all of the datasets together.
+Note: The `Analysis.pdf` file take several minutes to knit because of functions like `rbindlist()` that combine all of the datasets together.
 
 ---
 
