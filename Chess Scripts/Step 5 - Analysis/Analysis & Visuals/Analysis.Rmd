@@ -13,7 +13,7 @@ library(knitr)
 library(zoo)
 library(ggdark)
 library(gganimate)
-library(ggthemes)
+library(gg3D)
 ```
 
 
@@ -710,4 +710,42 @@ Above is a plot showing the stark difference between male and female rating dist
 # geom_point() +
 # labs(title = "{closest_state}") +
 # transition_states(Species, transition_length = 3, state_length = 1)
+
+library(stringr)
+library(ggwordcloud)
+
+Name <- FIDE%>%
+        filter(Date_numeric %in% max(Date_numeric), 
+               Activity %in% c("w", ""),
+               grepl(",", Name, fixed=TRUE))%>%
+        select(Name)%>%
+        mutate(comma = str_count(Name, ","))%>%
+        filter(comma == 1)%>%
+        select(-comma)%>%
+        separate(Name, c("Last", "First"), ",")
+
+
+First_name_counts = Name%>%
+                    group_by(First)%>%
+                    tally()%>%
+                    arrange(-n)%>%
+                    filter(n > 300)
+
+Last_name_counts  = Name%>%
+                    group_by(Last)%>%
+                    tally()%>%
+                    arrange(-n)%>%
+                    filter(n > 75)
+
+First_name_counts%>%
+ggplot(aes(label = First, size = n, color = First)) +
+  geom_text_wordcloud() +
+  dark_theme_minimal()+
+  scale_size_area(max_size = 15)
+
+Last_name_counts%>%
+ggplot(aes(label = Last, size = n, color = Last)) +
+  geom_text_wordcloud() +
+  dark_theme_minimal()+
+  scale_size_area(max_size = 15)
 ```
