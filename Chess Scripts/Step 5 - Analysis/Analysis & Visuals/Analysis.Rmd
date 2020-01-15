@@ -14,6 +14,7 @@ library(zoo)
 library(ggdark)
 library(gganimate)
 library(gg3D)
+library(ggwordcloud)
 ```
 
 
@@ -45,7 +46,10 @@ FIDE <- mget(ls(pattern = "[0-9][0-9]-[0-9][0-9]"))%>%
         rbindlist(fill = TRUE)
         
 rm(list=setdiff(ls(), c("FIDE")))
+```
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+regular_titles = c("CM", "FM", "IM", "GM")
 Titles = c("CM", "WCM",  "WGM", "WFM", "IM", "FM", "WIM", "GM", "")
 Titles_only = c("CM", "WCM",  "WGM", "WFM", "IM", "FM", "WIM", "GM")
 Active = c("", "w")
@@ -180,6 +184,22 @@ hist_data <- FIDE%>%
                     as.numeric(Age_Birthday) > 1900)%>%
              select(Sex, Rating)
              
+
+Name <- FIDE%>%
+        filter(Date_numeric %in% max(Date_numeric), 
+               Activity %in% c("w", ""),
+               grepl(",", Name, fixed=TRUE))%>%
+        select(Name)%>%
+        mutate(comma = str_count(Name, ","))%>%
+        filter(comma == 1)%>%
+        select(-comma)%>%
+        separate(Name, c("Last", "First"), ",")%>%
+        gather("Type", "Name")%>%
+        group_by(Type, Name)%>%
+        summarise(n = n())%>%
+        arrange(Type, -n)%>%
+        group_by(Type)%>%
+        top_n(n = 30)
 
 #write dataframe to folder
 
@@ -416,6 +436,19 @@ theme(panel.background = element_blank(),
       axis.ticks.y = element_blank(),
       legend.position = c(.8, .6)) -> p19
 
+Name%>%
+filter(Type == "First")%>%
+ggplot(aes(label = Name, size = n, color = Name)) +
+  geom_text_wordcloud() +
+  dark_theme_minimal()+
+  scale_size_area(max_size = 15) -> p20
+
+Name%>%
+filter(Type == "Last")%>%
+ggplot(aes(label = Name, size = n, color = Name)) +
+  geom_text_wordcloud() +
+  dark_theme_minimal()+
+  scale_size_area(max_size = 15) -> p21
 
 # dec19_titled%>%
 # ggplot(aes(x = Age_Birthday, y = Rating, fill = Title)) +
@@ -592,6 +625,20 @@ p19
 Above is a plot showing the stark difference between male and female rating distributions for the previous month. I'll look to explore why the female rating distribution is sharply skewed right compared to the male counterpart. 
 
 
+# Word Cloud: First names
+
+```{r, echo=FALSE, cache=FALSE}
+p20
+```
+
+
+# Word Cloud: Last names
+
+```{r, echo=FALSE, cache=FALSE}
+p21
+```
+
+
 ```{r, message=FALSE, warning=FALSE, echo=FALSE, eval=FALSE}
 
 # FIDE%>%
@@ -711,41 +758,81 @@ Above is a plot showing the stark difference between male and female rating dist
 # labs(title = "{closest_state}") +
 # transition_states(Species, transition_length = 3, state_length = 1)
 
-library(stringr)
-library(ggwordcloud)
-
-Name <- FIDE%>%
-        filter(Date_numeric %in% max(Date_numeric), 
-               Activity %in% c("w", ""),
-               grepl(",", Name, fixed=TRUE))%>%
-        select(Name)%>%
-        mutate(comma = str_count(Name, ","))%>%
-        filter(comma == 1)%>%
-        select(-comma)%>%
-        separate(Name, c("Last", "First"), ",")
 
 
-First_name_counts = Name%>%
-                    group_by(First)%>%
-                    tally()%>%
-                    arrange(-n)%>%
-                    filter(n > 300)
+# FIDE%>%
+# filter(Activity %in% Active, Title %in% regular_titles)%>%
+# transmute(Title, Rating, 
+#           Date = Date_numeric,
+#           Age = Date - as.numeric(Age_Birthday))%>%
+# filter(Rating > 999, Rating < 2900, Age > 0, Age < 200) -> exp
+# 
+# random = sample.int(nrow(exp), 1000)
+# 
+# 
+# exp[random,]%>%
+# ggplot(aes(x=Rating, y=Age, z=Date, color=Title)) + 
+# dark_theme_void() +
+# axes_3D() +
+# stat_3D(theta = 10)+
+# labs_3D(labs=c("Rating", "Age", "Date"))
 
-Last_name_counts  = Name%>%
-                    group_by(Last)%>%
-                    tally()%>%
-                    arrange(-n)%>%
-                    filter(n > 75)
+# best_titled <- FIDE%>%
+#                filter(Title %in% c("CM", "FM", "IM", "GM"))%>%
+#                group_by(Title, Country, Date_numeric)%>%
+#                tally()%>%
+#                filter(n > 15)%>%
+#                group_by(Country)%>%
+#                filter(n() >= 400)%>%
+#                group_by(Country)%>%
+#                tally()%>%
+#                arrange(-n)%>%
+#                head(10)%>%
+#                .$Country
+# 
+# FIDE%>%
+# filter(Title %in% regular_titles, Country %in% best_titled)%>%
+# group_by(Title, Country, Date_numeric, .drop = FALSE)%>%
+# tally()%>%
+# filter(Date_numeric == max(Date_numeric))%>%
+# ggplot(aes(x= Country, y =n, fill = Country))+
+#     geom_bar(stat ="identity")+
+#     coord_flip()+
+#     facet_wrap(~Title, scales = "free")+
+#     dark_theme_gray()+
+#     xlab("")+ylab("")+
+#     theme(axis.text=element_text(size=6))+
+#     theme(panel.grid.major = element_blank(), 
+#           panel.grid.minor = element_blank(),
+#           panel.background = element_blank())+
+#     theme(legend.position = "none")-> p16
 
-First_name_counts%>%
-ggplot(aes(label = First, size = n, color = First)) +
-  geom_text_wordcloud() +
-  dark_theme_minimal()+
-  scale_size_area(max_size = 15)
+FIDE%>%
+filter(Name %in% c("Carlsen, Magnus", 
+                    "Rawski, Slawomir", 
+                    "Anand, Viswanathan"))%>%
+select(Name, Rating, Date_numeric)%>%
+ggplot(aes(x = Date_numeric, y = Rating, colour = Name))+
+geom_line(size=1.5)+
+dark_theme_bw()+
+theme(legend.position = "bottom", 
+      plot.title = element_text(hjust = 0.5),
+      panel.background = element_blank())+
+xlab("Year")+
+ylab("Rating")+
+ggtitle("Rating over time")+
+guides(color=guide_legend(""))
 
-Last_name_counts%>%
-ggplot(aes(label = Last, size = n, color = Last)) +
-  geom_text_wordcloud() +
-  dark_theme_minimal()+
-  scale_size_area(max_size = 15)
+
+# FIDE%>%
+# group_by(Name)%>%
+# filter(n() >= 138)%>%
+# filter(Rating > 999, Rating < 2900, 
+#        Date_numeric %in% c(max(Date_numeric), min(Date_numeric)))%>%
+# group_by(Name)%>%
+# mutate(diff = Rating - lag(Rating))%>%
+# arrange(diff)%>%
+# filter(Activity %in% c("", "w"))-> maxed
+
+
 ```

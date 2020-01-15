@@ -86,6 +86,8 @@ url_vector <- url_vector[1:which(url_vect_destfile == latest)]
 rm(list=setdiff(ls(), c("url_vector", "url_vect_destfile")))
 ```
 
+\pagebreak
+
 # URLs and their files
 
 ```{r, echo=FALSE}
