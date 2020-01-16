@@ -10,6 +10,12 @@ The project is divided into 6 steps, which are outlined [here](https://github.co
 
 ---
 
+# 📈 Dashboard
+
+To see your ratings in real-time, I've created a dashboard to help chess players [here](https://anujdahiya24.shinyapps.io/apps/)
+
+---
+
 <img align="right" src = "https://cdn0.iconfinder.com/data/icons/Free-Icons-Shimmer-01-Creative-Freedom/256/folder.png" width="250">
 
 # 🗺️ Where is the data?
@@ -66,8 +72,8 @@ From the [FIDE Download Rating List page (old)](http://ratings.fide.com/download
 ###### ** IA - International Arbiter,  FT - FIDE Trainer, NI - National Instructor
 ###### *** Fide Online Arena
 
----
 
+---
 
 # 🧬 Lifecycle of data
 
