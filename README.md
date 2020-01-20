@@ -12,7 +12,7 @@ The project is divided into 6 steps, which are outlined [here](https://github.co
 
 # 📈 Dashboard
 
-To see your ratings in real-time, I've created a dashboard to help chess players [here](https://anujdahiya24.shinyapps.io/apps/).
+To see ratings in real-time, I've created a dashboard to help chess players [here](https://anujdahiya24.shinyapps.io/apps/).
 
 ---
 
