@@ -32,7 +32,7 @@ If you're not sure how to set your directory, you can choose `path` interactivel
 
 
 ```{r}
-path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Downloaded files"
+path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Standard"
 #path = choose.dir()
 
 opts_knit$set(root.dir = path)
@@ -71,10 +71,18 @@ Below, we put it all together using a somewhat ugly for loop, but it accomplishe
 for(i in seq_along(year_vector)){
   for(j in seq_along(month_vector)){
     if(12*(i-1)+j <= 140){
-      url_vector[12*(i-1)+j] = paste("http://ratings.fide.com/download/", month_vector[j], year_vector[i], "frl.zip", sep = "")
+      url_vector[12*(i-1)+j] = paste("http://ratings.fide.com/download/", 
+                                     month_vector[j], 
+                                     year_vector[i], 
+                                     "frl.zip", 
+                                     sep = "")
     }
     else if(12*(i-1)+j > 140){
-      url_vector[12*(i-1)+j] = paste("http://ratings.fide.com/download/standard_", month_vector[j], year_vector[i], "frl.zip", sep = "")
+      url_vector[12*(i-1)+j] = paste("http://ratings.fide.com/download/standard_", 
+                                     month_vector[j], 
+                                     year_vector[i], 
+                                     "frl.zip", 
+                                     sep = "")
     }
     url_vect_destfile[12*(i-1)+j] <- substr(url_vector[12*(i-1)+j], nchar(url_vector[12*(i-1)+j])- 11 , nchar(url_vector[12*(i-1)+j]))
   }
@@ -117,9 +125,9 @@ download_all <- function(link, dest){
 }
 
 
-old <- getOption("warn"); options(warn = -1)
-invisible(mapply(download_all, url_vector, url_vect_destfile))
-options(warn = old)
+# old <- getOption("warn"); options(warn = -1)
+# invisible(mapply(download_all, url_vector, url_vect_destfile))
+# options(warn = old)
 ```
 
 
@@ -142,3 +150,32 @@ head()
 ```
 
 As we can see, we can see the downloaded and unzipped text files: Success!
+
+
+# Blitz & Rapid data
+
+```{r}
+library(stringr)
+
+blitz_path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Blitz"
+rapid_path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Rapid"
+
+blitz = url_vector[141:length(url_vector)]%>%
+        str_replace("standard", "blitz")
+
+rapid = url_vector[141:length(url_vector)]%>%
+        str_replace("standard", "rapid")
+
+blitz_dest = url_vect_destfile[141:length(url_vector)]
+rapid_dest = url_vect_destfile[141:length(url_vector)]
+
+opts_knit$set(root.dir = blitz_path)
+
+mapply(download_all, blitz, blitz_dest)
+
+opts_knit$set(root.dir = rapid_path)
+
+mapply(download_all, rapid, rapid_dest)
+
+```
+

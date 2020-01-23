@@ -836,37 +836,37 @@ p21
 
 
 
-library(forcats)
-library(ggridges)
-
-players <- FIDE%>%
-           filter(Activity %in% c("w", ""),
-                  Rating > 1000, Rating < 2900,
-                  Sex %in% c("M", "F"))%>%
-           select(Rating, Date_numeric, Sex)%>% 
-           group_by(Date_numeric)%>% 
-           sample_n(1000)%>%
-           ungroup()
-
-           
-
-players %>%
-mutate(Date_numeric = fct_rev(as.factor(Date_numeric%>%round()))) %>%
-ggplot(aes(y = Date_numeric)) +
-geom_density_ridges(aes(x = Rating, fill = paste(Date_numeric, Sex)), 
-                    alpha = .8, color = "white"
-                    # , from = 0, to = 100
-                    ) +
-# labs(x = "Vote (%)", y = "Election Year", title = "Indy vs Unionist vote in Catalan elections",
-     # subtitle = "Analysis unit: municipalities (n = 949)",
-     # caption = "Marc Belzunces (@marcbeldata) | Source: Idescat") +
-# scale_y_discrete(expand = c(0, 0)) +
-# scale_x_continuous(expand = c(0, 0)) +
-scale_fill_cyclical(breaks = c("Male", "Female"),
-                    labels = c(`Male` = "Nale", `Female` = "Female"),
-                    values = c("#ff0000", "#0000ff", "#ff8080", "#8080ff"),
-                    name = "Sex", guide = "legend")+
-coord_cartesian(clip = "off") +
-theme_ridges(grid = FALSE)+
-dark_theme_classic()
+# library(forcats)
+# library(ggridges)
+# 
+# players <- FIDE%>%
+#            filter(Activity %in% c("w", ""),
+#                   Rating > 1000, Rating < 2900,
+#                   Sex %in% c("M", "F"))%>%
+#            select(Rating, Date_numeric, Sex)%>% 
+#            group_by(Date_numeric)%>% 
+#            sample_n(1000)%>%
+#            ungroup()
+# 
+#            
+# 
+# players %>%
+# mutate(Date_numeric = fct_rev(as.factor(Date_numeric%>%round()))) %>%
+# ggplot(aes(y = Date_numeric)) +
+# geom_density_ridges(aes(x = Rating, fill = paste(Date_numeric, Sex)), 
+#                     alpha = .8, color = "white"
+#                     # , from = 0, to = 100
+#                     ) +
+# # labs(x = "Vote (%)", y = "Election Year", title = "Indy vs Unionist vote in Catalan elections",
+#      # subtitle = "Analysis unit: municipalities (n = 949)",
+#      # caption = "Marc Belzunces (@marcbeldata) | Source: Idescat") +
+# # scale_y_discrete(expand = c(0, 0)) +
+# # scale_x_continuous(expand = c(0, 0)) +
+# scale_fill_cyclical(breaks = c("Male", "Female"),
+#                     labels = c(`Male` = "Nale", `Female` = "Female"),
+#                     values = c("#ff0000", "#0000ff", "#ff8080", "#8080ff"),
+#                     name = "Sex", guide = "legend")+
+# coord_cartesian(clip = "off") +
+# theme_ridges(grid = FALSE)+
+# dark_theme_classic()
 ```
