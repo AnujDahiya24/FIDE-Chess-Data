@@ -19,6 +19,7 @@ I don't think any packages are necessary to download any of the files. Still tho
 ```{r, message=FALSE, warning=FALSE}
 library(knitr)
 library(dplyr)
+library(stringr)
 ```
 
 
@@ -154,28 +155,47 @@ As we can see, we can see the downloaded and unzipped text files: Success!
 
 # Blitz & Rapid data
 
-```{r}
-library(stringr)
+Likewise, we can repeat the same steps on the blitz and rapid data sets.
 
+## Blitz
+
+```{r}
 blitz_path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Blitz"
-rapid_path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Rapid"
 
 blitz = url_vector[141:length(url_vector)]%>%
         str_replace("standard", "blitz")
 
-rapid = url_vector[141:length(url_vector)]%>%
-        str_replace("standard", "rapid")
-
 blitz_dest = url_vect_destfile[141:length(url_vector)]
-rapid_dest = url_vect_destfile[141:length(url_vector)]
 
 opts_knit$set(root.dir = blitz_path)
 
 mapply(download_all, blitz, blitz_dest)
 
+invisible(sapply(list.files(pattern = "*.zip"), function(x) unzip(x, exdir = getwd())))
+
+unlink(list.files(pattern = "*.zip"))
+```
+
+## Rapid
+
+```{r}
+
+rapid_path = "~/GitHub/FIDE/Chess Scripts/Step 1 - Download/Rapid"
+
+
+rapid = url_vector[141:length(url_vector)]%>%
+        str_replace("standard", "rapid")
+
+rapid_dest = url_vect_destfile[141:length(url_vector)]
+
 opts_knit$set(root.dir = rapid_path)
 
 mapply(download_all, rapid, rapid_dest)
 
+invisible(sapply(list.files(pattern = "*.zip"), function(x) unzip(x, exdir = getwd())))
+
+unlink(list.files(pattern = "*.zip"))
 ```
 
+
+Gwala, we are done.
